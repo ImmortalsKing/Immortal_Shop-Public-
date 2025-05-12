@@ -33,22 +33,22 @@ Immortal Kala Shop is a modern and scalable e-commerce web application focused o
 ## 📷 Screenshots
 
 ### 🏠 Homepage
-![Homepage](screenshots/home_page.png)
+![Homepage](screenshots/home_page.webp)
 
 ### ⏳ Product Offers with Timer
-![Dashboard](screenshots/timer.png)
+![Dashboard](screenshots/timer.webp)
 
 ### 📱 Products Listing
-![Doctor Introduction](screenshots/products.png)
+![Doctor Introduction](screenshots/products.webp)
 
 ### 📰 Blog Section
-![User Dashboard](screenshots/blogs.png)
+![User Dashboard](screenshots/blogs.webp)
 
 ### 🛒 Shopping Cart
-![Medical Services](screenshots/shopping.png)
+![Medical Services](screenshots/shopping.webp)
 
 ### 👤 User Profile / Dashboard
-![User Dashboard](screenshots/profile.png)
+![User Dashboard](screenshots/profile.webp)
 
 ---
 
