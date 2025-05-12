@@ -1,0 +1,45 @@
+{% extends 'shared/_layout.html' %}
+{% load render_partial %}
+{% load static %}
+
+{% block title %}
+	My Shopping Page
+{% endblock %}
+{% block header_references %}
+    <link rel="stylesheet" href="{% static 'css/user_panel.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="dashboard-container">
+    {% render_partial 'user_panel_module.views.user_panel_sidebar_component' %}
+    <div class="dash-content">
+        <div class="account-info">
+            <table style="padding-left: 15rem" class="table table-responsive table-hover table-striped">
+                <thead class="table-dark">
+                    <th class="text-center">Order ID</th>
+                    <th class="text-center">Order Payment Date</th>
+                    <th class="text-center">Order Final Price</th>
+                    <th class="text-center">Order Tracking Code</th>
+                    <th class="text-center">Commands</th>
+                </thead>
+                {% for order in my_shopping %}
+                	<tr>
+                    <td class="text-center">{{ order.id }}</td>
+                    <td class="text-center">{{ order.payment_date }}</td>
+                    <td class="text-center">$ {{ order.sub_total_amount|add:order.shipping_method.price }}</td>
+                    <td class="text-center">{{ order.tracking_code }}</td>
+                    <td class="text-center"><a href="{% url 'user_shopping_detail_page' order_id=order.id %}" class="btn btn-success">Details</a></td>
+                    </tr>
+                {% endfor %}
+
+            </table>
+        </div>
+    </div>
+</div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+{% endblock %}

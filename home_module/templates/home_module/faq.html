@@ -1,0 +1,31 @@
+{% extends 'shared/_layout.html' %}
+{% load static %}
+
+{% block title %}
+    FAQ
+{% endblock %}
+{% block header_references %}
+    <link rel="stylesheet" href="{% static 'css/faq.css' %}">
+{% endblock %}
+{% block footer_references %}
+    <script src='{% static 'js/faq.js' %}'></script>
+{% endblock %}
+
+{% block content %}
+    <br>
+    <br>
+    <div class="container d-flex justify-content-center align-items-center">
+    <a href="{{ banner.url }}"> <img class="about-section img" src="{{ banner.image.url }}" alt="About Us Banner">
+    </a>
+    </div>
+    <hr>
+    <div class="faq-container">
+        <h2>Frequently Asked Questions</h2>
+        {% for faq in faqs %}
+            <div class="faq-item">
+                <div class="faq-question">{{ faq.question }}</div>
+                <div class="faq-answer">{{ faq.answer }}</div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

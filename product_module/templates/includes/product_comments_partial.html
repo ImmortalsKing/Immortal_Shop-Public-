@@ -1,0 +1,23 @@
+{% load thumbnail %}
+
+<div class="comment_list" id="comments_area">
+    {% for comment in comments %}
+        <div class="review_item">
+            <div class="media">
+                <div class="d-flex">
+                    {% thumbnail comment.user.avatar '100x100' as im %}
+                        <img src="{{ im.url }}" alt="">
+                    {% endthumbnail %}
+                </div>
+                <div class="media-body">
+                    <h4>{{ comment.user }}</h4>
+                    <h5>{{ comment.create_date }}</h5>
+                    <h6>{{ comment.subject }}</h6>
+                </div>
+            </div>
+            <p>{{ comment.text }}</p>
+        </div>
+        <hr>
+    {% endfor %}
+
+</div>

@@ -1,0 +1,29 @@
+{% extends 'shared/_layout.html' %}
+{% load static %}
+
+{% block title %}
+    Terms & Conditions
+{% endblock %}
+{% block header_references %}
+    <link rel="stylesheet" href="{% static 'css/about_us.css' %}">
+{% endblock %}
+
+{% block content %}
+    <br>
+    <br>
+    <div class="container d-flex justify-content-center align-items-center">
+        <div class="about-section">
+            {% for banner in banners %}
+                <a href="{{ banner.url }}"> <img style="padding-left: 6rem" src="{{ banner.image.url }}" alt="About Us Banner">
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="container">
+        <div class="about-section">
+            <h1>Terms and Conditions</h1>
+            {{ terms.text|safe }}
+        </div>
+    </div>
+
+{% endblock %}

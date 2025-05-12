@@ -1,0 +1,115 @@
+{% extends 'shared/_layout.html' %}
+{% load render_partial %}
+{% load static %}
+
+{% block title %}
+    Edit Profile Page
+{% endblock %}
+{% block header_references %}
+    <link rel="stylesheet" href="{% static 'css/user_panel.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    {% render_partial 'user_panel_module.views.user_panel_sidebar_component' %}
+    <div class="dash-content">
+    {% if request.path == '/account/edit-profile/' %}
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endif %}
+        <div class="edit-profile-form">
+            <h3 style="text-align: left">Edit Profile</h3>
+            <hr>
+            <form action="{% url 'edit_profile_page' %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group form-inline">
+                    <div class="form-group col-lg-6 col-md-6">
+                        {{ form.first_name.label }}
+                        {{ form.first_name }}
+                        {{ form.first_name.errors }}
+                    </div>
+                    <div class="form-group col-lg-6 col-md-6">
+                        {{ form.last_name.label }}
+                        {{ form.last_name }}
+                        {{ form.last_name.errors }}
+                    </div>
+                </div>
+                <div class="form-group form-inline">
+                    <div class="form-group col-lg-6 col-md-6">
+                        {{ form.email.label }}
+                        {{ form.email }}
+                        {% if form.email.errors %}
+                            {% for error in form.email.errors %}
+                                {{ error }}
+                            {% endfor %}
+
+                        {% endif %}
+                    </div>
+                    <div class="form-group col-lg-6 col-md-6">
+                        {{ form.username.label }}
+                        {{ form.username }}
+                        {{ form.username.errors }}
+                    </div>
+                </div>
+                <div class="form-group form-inline">
+                    <div class="form-group col-lg-6 col-md-6">
+                        {{ form.about_user.label }}
+                        {{ form.about_user }}
+                        {{ form.about_user.errors }}
+                    </div>
+                    <div class="form-group col-lg-6 col-md-6">
+                        {{ form.address.label }}
+                        {{ form.address }}
+                        {{ form.address.errors }}
+                    </div>
+                </div>
+                <div class="form-group form-inline">
+                    <div class="form-group col-lg-6 col-md-6">
+                        {{ form.phone.label }}
+                        {{ form.phone }}
+                        {{ form.phone.errors }}
+                    </div>
+                    <div class="form-group col-lg-6 col-md-6">
+                        {{ form.fax.label }}
+                        {{ form.fax }}
+                        {{ form.fax.errors }}
+                    </div>
+                </div>
+                <div style="padding-left: 1rem" class="form-group form-inline">
+                    {{ form.avatar.label }}
+                </div>
+                <div style="padding-left: 1rem" class="form-group form-inline">
+                    {{ form.avatar }}
+                    {% if form.avatar.errors %}
+                        {% for error in form.avatar.errors %}
+                            {{ error }}
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <div class="form-group form-inline">
+                    <div class="form-group col-lg-6 col-md-6">
+                        {{ form.captcha }}
+                        <div style="color: red;">
+                            {{ form.captcha.errors }}
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="primary-btn submit_btn">Submit Changes</button>
+            </form>
+        </div>
+    </div>
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+{% endblock %}

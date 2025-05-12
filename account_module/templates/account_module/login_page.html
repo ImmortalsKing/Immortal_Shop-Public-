@@ -1,0 +1,57 @@
+{% extends 'shared/_layout.html' %}
+{% load static %}
+
+{% block title %}
+    Login Page
+{% endblock %}
+{% block header_references %}
+    <link rel="stylesheet" href="{% static 'css/register.css' %}">
+{% endblock %}
+
+
+{% block content %}
+    <div>
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+    <div class="my-body">
+        <div class="register-container col-md-3">
+            <section id="form">
+                <h1 class="form-title">Sign In</h1>
+                <form action="{% url 'login_page' %}" method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        {{ form.identification.label_tag }}
+                        {{ form.identification }}
+                        {{ form.identification.errors }}
+                    </div>
+                    <div class="mb-3">
+                        {{ form.password.label_tag }}
+                        {{ form.password }}
+                        {{ form.password.errors }}
+                    </div>
+                    <div class="mb-3 d-flex justify-content-center flex-column align-items-center">
+                        <div>
+                            {{ form.captcha }}
+                        </div>
+                        <div class="text-danger mt-2">
+                            {{ form.captcha.errors }}
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Login</button>
+                </form>
+                <div class="form-footer">
+                    <p>If you're new to kala shop, you can <a href="{% url 'register_page' %}">Register</a></p>
+                    <p>Forgot Password? <a href="{% url 'forgot_pass_page' %}">Click here!</a></p>
+                </div>
+            </section>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,16 @@
+<div class="blog_info text-right">
+        <div class="post_tag">
+            {% for blog_category in blog_categories %}
+                <a class="{% if blog_category in blog.categories.all %}active{% endif %}"
+                   href="#">{{ blog_category.title }}</a>
+                {% if not forloop.last %}, {% endif %}
+            {% endfor %}
+
+        </div>
+        <ul class="blog_meta list">
+            <li><a>{{ blog.author }}<i class="lnr lnr-user"></i></a></li>
+            <li><a>{{ blog.create_date }}<i class="lnr lnr-calendar-full"></i></a></li>
+            <li><a>({{ blog_visits_count }}) Views<i class="lnr lnr-eye"></i></a></li>
+            <li><a href="#">({{ comments_count }}) Comments<i class="lnr lnr-bubble"></i></a></li>
+        </ul>
+    </div>

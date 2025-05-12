@@ -1,0 +1,45 @@
+<div class="col-lg-4  col-md-6 col-sm-6">
+    <div class="single-footer-widget">
+        <h6>Newsletter</h6>
+        <p>Stay update with our latest</p>
+        <div class="">
+
+            <form action="{% url 'subscribe_to_newsletter' %}" method="post" class="form-inline">
+                {% csrf_token %}
+
+                <div class="d-flex flex-row align-items-center flex-wrap">
+
+                    <!-- Email input -->
+                    <div style="width: 250px" class="me-2">
+                        {{ form.email }}
+                        {% if form.email.errors %}
+                            <div class="alert alert-danger mt-1">
+                                {% for error in form.email.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Submit button -->
+                    <div style="margin-left: -20px" class="mt-1">
+                        <button class="click-btn btn btn-default">
+                            <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                        </button>
+                    </div>
+
+                    <!-- Captcha: goes to the next line -->
+                    <div class="w-100 mt-3">
+                        {{ form.captcha }}
+                        <div style="color: red;">
+                            {{ form.captcha.errors }}
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+
+
+        </div>
+    </div>
+</div>

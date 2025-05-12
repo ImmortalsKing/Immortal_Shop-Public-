@@ -1,0 +1,48 @@
+{% extends 'shared/_layout.html' %}
+{% load static %}
+
+{% block title %}
+    About Us Page
+{% endblock %}
+{% block header_references %}
+    <link rel="stylesheet" href="{% static 'css/about_us.css' %}">
+{% endblock %}
+
+{% block content %}
+    <br>
+    <br>
+    <div class="container">
+        <div class="about-section">
+            <h2>Who We Are</h2>
+            <p>
+                {{ site_settings.about_our_team }}
+            </p>
+            {% for banner in banners %}
+                <a href="{{ banner.url }}"> <img style="padding-left: 6rem" src="{{ banner.image.url }}" alt="About Us Banner">
+                </a>
+            {% endfor %}
+        </div>
+
+        <div class="about-section">
+            <h2>About Our Website</h2>
+            <p>
+                {{ site_settings.about_us_text }}
+            </p>
+        </div>
+
+        <div class="about-section">
+            <h2>Meet Our Team</h2>
+            <div class="team">
+                {% for member in site_settings.team_members.all %}
+                    <div class="team-member">
+                        <img src="{{ member.avatar.url }}" alt="Team Member{{ member.id }}">
+                        <h3>{{ member }}</h3>
+                        <p>{{ member.position }}</p>
+                    </div>
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

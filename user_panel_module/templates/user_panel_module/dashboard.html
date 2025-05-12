@@ -1,0 +1,44 @@
+{% extends 'shared/_layout.html' %}
+{% load render_partial %}
+{% load static %}
+
+{% block title %}
+	Dashboard
+{% endblock %}
+{% block header_references %}
+    <link rel="stylesheet" href="{% static 'css/user_panel.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="dashboard-container">
+    {% render_partial 'user_panel_module.views.user_panel_sidebar_component' %}
+    <div class="dash-content">
+        <div class="account-info">
+            <h3>Account Information</h3>
+            <hr>
+            <p><i class="ti-user"> </i><strong>Username: </strong>{{ user.username }}</p>
+            <p><i class="ti-email"> </i><strong>Email: </strong>{{ user.email }}</p>
+            <p><i class="ti-book"> </i><strong>About User: </strong>
+            {% if user.about_user %}
+            	 {{ user.about_user }}
+                {% else %}
+                -
+            {% endif %}
+            </p>
+            <p><i class="ti-microphone"> </i><strong>Phone Number: </strong>
+            {% if user.phone %}
+            	 {{ user.phone }}
+                {% else %}
+                -
+            {% endif %}
+            </p>
+        </div>
+    </div>
+</div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+{% endblock %}

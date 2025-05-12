@@ -1,0 +1,21 @@
+{% load static %}
+{% load render_partial %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="icon" type="image/png" href="{% static 'img/icon.png' %}">
+    {% include 'shared/header_references.html' %}
+    {% block header_references %}{% endblock %}
+</head>
+<body>
+{% render_partial 'home_module.views.site_header_component' %}
+{% render_partial 'home_module.views.site_banner_component' %}
+{% block content %}{% endblock %}
+{% block footer_references %}{% endblock %}
+{% render_partial 'home_module.views.site_footer_component' %}
+{% include 'shared/footer_references.html' %}
+</body>
+</html>

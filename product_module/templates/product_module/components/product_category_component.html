@@ -1,0 +1,11 @@
+<div class="sidebar-categories">
+    <div class="head">Browse Categories</div>
+    <ul class="main-categories">
+        {% for main_category in main_categories %}
+            <li class="main-nav-list"><a href="{% url 'products_list_by_category' cat=main_category.url_title %}"><span class="lnr lnr-arrow-right"></span>{{ main_category.title }}<span
+                    class="number">({{ main_category.products_count }})</span></a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+<hr>

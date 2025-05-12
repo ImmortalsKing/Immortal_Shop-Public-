@@ -1,0 +1,7 @@
+.idea
+.idea/
+venv
+.venv/
+/db.sqlite3
+/.env
+/mailu.env

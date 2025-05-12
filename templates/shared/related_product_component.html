@@ -1,0 +1,52 @@
+{% load thumbnail %}
+
+{% if products %}
+	{% if products.discount_percentage != null or products.discount_percentage != "" %}
+    <section class="related-product-area section_gap">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-6 text-center">
+                    <div class="section-title">
+                        <h1>Deals of the Week</h1>
+                        <p>Discover unbeatable tech bargains in our Deals of the Week! Limited-time offers on top gadgets, accessories, and must-have electronics.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-9">
+                    <div class="row">
+                        {% for product in products %}
+                            <div class="col-lg-4 col-md-4 col-sm-6 mb-20">
+                                <div class="single-related-product d-flex">
+                                    <a href="#">
+                                        {% thumbnail product.image "100x100" crop="center" quality=90 as im %}
+                                            <img src="{{ im.url }}" alt="">
+                                        {% endthumbnail %}
+                                    </a>
+                                    <div class="desc">
+                                        <a href="#" class="title">{{ product.title }}</a>
+                                        <div class="price">
+                                            <h6>${{ product.get_price_after_discount }}</h6>
+                                            <h6 class="l-through">${{ product.price }}</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="ctg-right">
+                        <a href="#" target="_blank">
+                            <img class="img-fluid d-block mx-auto" src="{{ related_banner.image.url }}" alt="">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endif %}
+    {% else %}
+        <p style="margin: 0 auto;" class="alert alert-warning">No Products Found</p>
+{% endif %}

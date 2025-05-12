@@ -1,0 +1,401 @@
+{% load render_partial %}
+{% load thumbnail %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Kala Shop</title>
+    {% include 'shared/header_references.html' %}
+</head>
+<body>
+{% render_partial 'home_module.views.site_header_component' %}
+
+<!-- start banner Area -->
+<section class="banner-area">
+    <div class="container">
+        <div style="height:700px;" class="row align-items-center justify-content-start">
+            <div class="col-lg-12">
+                <div class="active-banner-slider owl-carousel">
+                    <!-- single-slide -->
+                    {% for slider in sliders %}
+                        <div style="padding-left: 10rem;padding-top: 5rem" class="row single-slide align-items-center d-flex">
+                            <div class="col-lg-5">
+                                <div class="banner-content">
+                                    <h1>{{ slider.title }}</h1>
+                                    <p>{{ slider.description }}</p>
+                                    <div class="add-bag d-flex align-items-center">
+                                        <a class="btn btn-primary btn_lg" href="{{ slider.url }}">More Details</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-7">
+                                <div class="banner-img">
+                                    <img style="width: 400px;height: 400px" class="img-fluid"
+                                         src="{{ slider.image.url }}" alt="">
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End banner Area -->
+{% if request.path == main_page_address %}
+    {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endif %}
+{% if not request.user.is_authenticated %}
+	<!-- start gif area -->
+<div class="gif-container">
+    <a href="{{ gif_banner.url }}">
+        <img src="{{ gif_banner.image.url }}" alt="">
+    </a>
+</div>
+<!-- end gif area -->
+{% endif %}
+<!-- start features Area -->
+<section class="features-area section_gap">
+    <div class="container">
+        <div class="row features-inner">
+            <!-- single features -->
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="single-features">
+                    <div class="f-icon">
+                        <img src="{% static 'img/features/f-icon1.png' %}" alt="">
+                    </div>
+                    <h6>Free Delivery</h6>
+                    <p>Free Shipping on all order</p>
+                </div>
+            </div>
+            <!-- single features -->
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="single-features">
+                    <div class="f-icon">
+                        <img src="{% static 'img/features/f-icon2.png' %}" alt="">
+                    </div>
+                    <h6>Return Policy</h6>
+                    <p>Free Shipping on all order</p>
+                </div>
+            </div>
+            <!-- single features -->
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="single-features">
+                    <div class="f-icon">
+                        <img src="{% static 'img/features/f-icon3.png' %}" alt="">
+                    </div>
+                    <h6>24/7 Support</h6>
+                    <p>Free Shipping on all order</p>
+                </div>
+            </div>
+            <!-- single features -->
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="single-features">
+                    <div class="f-icon">
+                        <img src="{% static 'img/features/f-icon4.png' %}" alt="">
+                    </div>
+                    <h6>Secure Payment</h6>
+                    <p>Free Shipping on all order</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- end features Area -->
+
+<!-- Start category Area -->
+<section class="category-area">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-md-12">
+                <div class="row">
+                    <div class="col-lg-7 col-md-7">
+                        <div class="single-deal">
+                            <div class="overlay"></div>
+                            <img class="img-fluid w-100" src="{{ first_cat_banner.image.url }}" alt="">
+                            <a href="{{ first_cat_banner.url }}">
+                                <div class="deal-details">
+                                    <h6 class="deal-title">{{ first_cat_banner.title }}</h6>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-5 col-md-5">
+                        <div class="single-deal">
+                            <div class="overlay"></div>
+                            <img class="img-fluid w-100" src="{{ second_cat_banner.image.url }}" alt="">
+                            <a href="{{ second_cat_banner.url }}">
+                                <div class="deal-details">
+                                    <h6 class="deal-title">{{ second_cat_banner.title }}</h6>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-5 col-md-5">
+                        <div class="single-deal">
+                            <div class="overlay"></div>
+                            <img class="img-fluid w-100" src="{{ third_cat_banner.image.url }}" alt="">
+                            <a href="{{ third_cat_banner.url }}">
+                                <div class="deal-details">
+                                    <h6 class="deal-title">{{ third_cat_banner.title }}</h6>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-7 col-md-7">
+                        <div class="single-deal">
+                            <div class="overlay"></div>
+                            <img class="img-fluid w-100" src="{{ forth_cat_banner.image.url }}" alt="">
+                            <a href="{{ forth_cat_banner.url }}">
+                                <div class="deal-details">
+                                    <h6 class="deal-title">{{ forth_cat_banner.title }}</h6>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="single-deal">
+                    <div class="overlay"></div>
+                    {% if home_banner %}
+                        <img style="padding-top: 1rem" class="img-fluid w-100" src="{{ home_banner.image.url }}" alt="">
+                        <a href="{{ home_banner.url }}">
+                    {% else %}
+                        <img class="img-fluid w-100" src="{% static 'img/category/c5.jpg' %}" alt="">
+                        <a href="{% url 'home_page' %}">
+                    {% endif %}
+                    <div style="padding-top: 1rem" class="deal-details">
+                        <h6 class="deal-title">Visit Our Shop</h6>
+                    </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End category Area -->
+
+<!-- start product Area -->
+<section class="owl-carousel active-product-area section_gap">
+    <!-- single product slide -->
+    <div class="single-product-slider">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-6 text-center">
+                    <div class="section-title">
+                        <h1>Latest Products</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <!-- single product -->
+                {% for group in latest_products %}
+                    {% for product in group %}
+                        <div class="col-lg-3 col-md-6">
+                            <div class="single-product">
+                                <img src="{{ product.image.url }}" alt="">
+                                <div class="product-details">
+                                    <h6>{{ product.title }}</h6>
+                                    <div class="price">
+                                        {% if product.discount_percentage and product.discount_timer.is_active == True %}
+                                            <h6>${{ product.get_price_after_discount }}</h6>
+                                            <h6 class="l-through">${{ product.price }}</h6>
+                                        {% elif product.discount_percentage and product.discount_timer == Null %}
+                                            <h6>${{ product.get_price_after_discount }}</h6>
+                                            <h6 class="l-through">${{ product.price }}</h6>
+                                        {% else %}
+                                            <h6>${{ product.price }}</h6>
+                                        {% endif %}
+                                    </div>
+                                    <div class="prd-bottom">
+
+                                        <a onclick="listAddToCart({{ product.id }},1)" class="social-info cursor-pointer">
+                                            <span class="ti-bag"></span>
+                                            <p class="hover-text">add to bag</p>
+                                        </a>
+                                        {% if product in request.user.favorite_products.all %}
+                                            <a href="{% url 'remove_from_favorites' slug=product.slug %}"
+                                               class="social-info">
+                                                <span class="bi bi-heart-fill"></span>
+                                                <p class="hover-text">remove</p>
+                                            </a>
+                                        {% else %}
+                                            <a href="{% url 'add_to_favorites' slug=product.slug %}"
+                                               class="social-info">
+                                                <span class="lnr lnr-heart"></span>
+                                                <p class="hover-text">add to fav</p>
+                                            </a>
+                                        {% endif %}
+                                        <a href="{% url 'products_detail' slug=product.slug %}" class="social-info">
+                                            <span class="lnr lnr-move"></span>
+                                            <p class="hover-text">view more</p>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+
+                <!-- single product -->
+            </div>
+        </div>
+    </div>
+    <!-- single product slide -->
+    <div class="single-product-slider">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-6 text-center">
+                    <div class="section-title">
+                        <h1>Popular Products</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <!-- single product -->
+                {% for group in popular_products %}
+                    {% for product in group %}
+                        <div class="col-lg-3 col-md-6">
+                            <div class="single-product">
+                                <img src="{{ product.image.url }}" alt="">
+                                <div class="product-details">
+                                    <h6>{{ product.title }}</h6>
+                                    <div class="price">
+                                        {% if product.discount_percentage and product.discount_timer.is_active == True %}
+                                            <h6>${{ product.get_price_after_discount }}</h6>
+                                            <h6 class="l-through">${{ product.price }}</h6>
+                                        {% elif product.discount_percentage and product.discount_timer == Null %}
+                                            <h6>${{ product.get_price_after_discount }}</h6>
+                                            <h6 class="l-through">${{ product.price }}</h6>
+                                        {% else %}
+                                            <h6>${{ product.price }}</h6>
+                                        {% endif %}
+                                    </div>
+                                    <div class="prd-bottom">
+                                        <a onclick="listAddToCart({{ product.id }},1)" class="social-info cursor-pointer">
+                                            <span class="ti-bag"></span>
+                                            <p class="hover-text">add to bag</p>
+                                        </a>
+                                        {% if product in request.user.favorite_products.all %}
+                                            <a href="{% url 'remove_from_favorites' slug=product.slug %}"
+                                               class="social-info">
+                                                <span class="bi bi-heart-fill"></span>
+                                                <p class="hover-text">remove</p>
+                                            </a>
+                                        {% else %}
+                                            <a href="{% url 'add_to_favorites' slug=product.slug %}"
+                                               class="social-info">
+                                                <span class="lnr lnr-heart"></span>
+                                                <p class="hover-text">add to fav</p>
+                                            </a>
+                                        {% endif %}
+                                        <a href="{% url 'products_detail' slug=product.slug %}" class="social-info">
+                                            <span class="lnr lnr-move"></span>
+                                            <p class="hover-text">view more</p>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+</section>
+<!-- end product Area -->
+<!-- Start exclusive deal Area -->
+{% if discount_timer.is_active and discount_timer_products %}
+    <section class="exclusive-deal-area">
+        <div class="container-fluid">
+            <div class="row justify-content-center align-items-center">
+                <div style="background:url('{{ discount_banner.image.url }}') center no-repeat" class="col-lg-6 no-padding exclusive-left">
+                    <div class="row clock_sec clockdiv" id="clockdiv">
+                        <div class="col-lg-12">
+                            <h1>{{ discount_timer.title }}</h1>
+                            <p>Hurry up before the offer ends!</p>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="row clock-wrap">
+                                <div class="col clockinner1 clockinner">
+                                    <h1 class="days"></h1>
+                                    <span class="smalltext">Days</span>
+                                </div>
+                                <div class="col clockinner clockinner1">
+                                    <h1 class="hours"></h1>
+                                    <span class="smalltext">Hours</span>
+                                </div>
+                                <div class="col clockinner clockinner1">
+                                    <h1 class="minutes"></h1>
+                                    <span class="smalltext">Mins</span>
+                                </div>
+                                <div class="col clockinner clockinner1">
+                                    <h1 class="seconds"></h1>
+                                    <span class="smalltext">Secs</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 no-padding exclusive-right">
+                    <div class="active-exclusive-product-slider">
+                        <!-- single exclusive carousel -->
+                        {% for product in discount_timer_products %}
+                            <div class="single-exclusive-slider">
+                                <img class="img-fluid" src="{{ product.image.url }}" alt="">
+                                <div class="product-details">
+                                    <div class="price">
+                                        <h6>${{ product.get_price_after_discount }}</h6>
+                                        <h6 class="l-through">${{ product.price }}</h6>
+                                    </div>
+                                    <h4>{{ item.title }}</h4>
+                                    <div class="add-bag d-flex align-items-center justify-content-center">
+                                        <a onclick="listAddToCart({{ product.id }},1)" class="add-btn cursor-pointer"><span class="ti-bag"></span></a>
+                                        <span class="add-text text-uppercase">Add to Bag</span>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endif %}
+<!-- End exclusive deal Area -->
+
+<!-- Start brand Area -->
+<section class="brand-area section_gap">
+    <div class="container">
+        <div class="row brand-imgs">
+            {% for brand in brands %}
+                <a class="col single-img" href="{% url 'products_list_by_brand' brand=brand.url_title %}">
+                    <img style="max-height: 100px" class="img-fluid d-block mx-auto" src="{{ brand.image.url }}" alt="">
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+<!-- End brand Area -->
+
+
+{% render_partial 'home_module.views.site_related_products_component' %}
+{% render_partial 'home_module.views.site_footer_component' %}
+<script>
+    var deadline = "{{ discount_timer.end_time|date:'Y-m-d H:i:s' }}";
+</script>
+{% include 'shared/footer_references.html' %}
+</body>
+</html>

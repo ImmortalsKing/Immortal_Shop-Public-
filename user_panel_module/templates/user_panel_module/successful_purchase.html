@@ -1,0 +1,19 @@
+{% extends 'shared/_layout.html' %}
+{% load static %}
+
+{% block title %}
+	Successful Purchase
+{% endblock %}
+{% block header_references %}
+    <link rel="stylesheet" href="{% static 'css/purchase.css' %}">
+{% endblock %}
+
+{% block content %}
+	<div class="code-container">
+        <h1>Congratulations!</h1>
+        <p>Your purchase was successful.</p>
+        <img style="width: 150px;height: 150px;" src="{% static '/img/icons8-check-mark-500.png' %}" alt="">
+        <div class="tracking-code">Your tracking code: <strong>{{ tracking_code }}</strong></div>
+        <a href="{% url 'home_page' %}" class="code-button">Return to Home page</a>
+    </div>
+{% endblock %}

@@ -1,0 +1,224 @@
+{% extends 'shared/_layout.html' %}
+{% load render_partial %}
+{% load thumbnail %}
+{% load static %}
+
+{% block title %}
+    Blog Detail
+{% endblock %}
+
+{% block content %}
+    <div>
+        {% if '/blogs/' in request.path %}
+                        {% if messages %}
+                            <div class="messages">
+                                {% for message in messages %}
+                                    <div class="alert alert-{{ message.tags }}">
+                                        {{ message }}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    {% endif %}
+    </div>
+    <section class="blog_area single-post-area section_gap">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 posts-list">
+                    <div class="single-post row">
+                        <div class="col-lg-12">
+                            <div class="feature-img">
+                                {% thumbnail selected_blog.image '700x350' crop='center' quality=100 as im %}
+                                    <img class="img-main-fluid" src="{{ im.url }}" alt="">
+                                {% endthumbnail %}
+                            </div>
+                        </div>
+                        <div class="col-lg-3  col-md-3">
+                            {% render_partial 'blog_module.views.blog_info' blog=blog slug=selected_blog.slug %}
+                        </div>
+                        <div class="col-lg-9 col-md-9 blog_details">
+                            <h2>{{ selected_blog.title }}</h2>
+                            <p style="color:black;" class="excert">
+                                {{ selected_blog.short_description }}
+                            </p>
+                        </div>
+                        <div class="col-lg-12">
+                            {% if selected_blog.quotes %}
+                                <div class="quotes">
+                                    {{ selected_blog.quotes }}
+                                </div>
+                            {% endif %}
+                            <br>
+                            <br>
+                            <div class="row">
+                                {% if blog_galleries %}
+                                    {% for blog_gallery in blog_galleries %}
+                                        <div class="col-6 mb-4">
+                                            {% thumbnail blog_gallery.image '700x700' crop='center' quality=100 as im %}
+                                                <img class="blog-img-fluid" src="{{ im.url }}" alt="">
+                                            {% endthumbnail %}
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
+                                <div class="col-lg-12 mt-25">
+                                    <p>
+                                        {{ selected_blog.text|safe }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="navigation-area">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-12 nav-left flex-row d-flex justify-content-start align-items-center">
+                                {% if previous_blog %}
+                                    <div class="thumb">
+                                        <a href="{{ previous_blog.get_absolute_url }}">
+                                            {% thumbnail previous_blog.image '150x150' crop='center' as im %}
+                                                <img class="nav-bar-img-fluid" src="{{ im.url }}" alt="">
+                                            {% endthumbnail %}
+                                        </a>
+                                    </div>
+                                    <div class="arrow">
+                                        <a href="{{ previous_blog.get_absolute_url }}"><span
+                                                class="lnr text-white lnr-arrow-left"></span></a>
+                                    </div>
+                                    <div class="detials">
+                                        <p>Prev Post</p>
+                                        <a href="{{ previous_blog.get_absolute_url }}">
+                                            <h4>{{ previous_blog.title }}</h4>
+                                        </a>
+                                    </div>
+                                {% else %}
+                                    <div class="thumb invisible">
+                                        <a href="#"><img class="img-fluid" src="#" alt=""></a>
+                                    </div>
+                                    <div class="arrow invisible">
+                                        <a href="#"><span class="lnr text-white lnr-arrow-left"></span></a>
+                                    </div>
+                                    <div class="detials invisible">
+                                        <p>Prev Post</p>
+                                        <a href="#"><h4>Placeholder</h4></a>
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-12 nav-right flex-row d-flex justify-content-end align-items-center">
+                                {% if next_blog %}
+                                    <div class="detials">
+                                        <p>Next Post</p>
+                                        <a href="{{ next_blog.get_absolute_url }}">
+                                            <h4>{{ next_blog.title }}</h4>
+                                        </a>
+                                    </div>
+                                    <div class="arrow">
+                                        <a href="{{ next_blog.get_absolute_url }}"><span
+                                                class="lnr text-white lnr-arrow-right"></span></a>
+                                    </div>
+                                    <div class="thumb">
+                                        <a href="{{ next_blog.get_absolute_url }}">
+                                            {% thumbnail next_blog.image '150x150' crop='center' as im %}
+                                                <img class="nav-bar-img-fluid" src="{{ im.url }}" alt="">
+                                            {% endthumbnail %}
+                                        </a>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="comments-area">
+                        <h4>({{ comments_count }}) Comments</h4>
+                        {% if comments %}
+                            {% for comment in comments %}
+                                <div class="comment-list">
+                                    <div class="single-comment justify-content-between d-flex"
+                                         id="single_comment_box_{{ comment.id }}">
+                                        <div class="user justify-content-between d-flex">
+                                            <div class="thumb">
+                                                {% if comment.user.avatar %}
+                                                    {% thumbnail comment.user.avatar '100x100' crop='center' as im %}
+                                                        <img src="{{ im.url }}" alt="">
+                                                    {% endthumbnail %}
+                                                {% else %}
+                                                    <img style="width: 100px;height: 100px" src="{% static 'img/avatar.png' %}"
+                                                         alt="">
+                                                {% endif %}
+                                            </div>
+                                            <div class="desc">
+                                                <h5><a href="#">{{ comment.user }}</a></h5>
+                                                <p class="date">{{ comment.create_date }}</p>
+                                                <p class="comment">
+                                                    {{ comment.text }}
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="reply-btn cursor-pointer">
+                                            <a onclick="fillParentId({{ comment.id }})"
+                                               class="btn-reply text-uppercase">reply</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {% for sub_comment in comment.blogcomments_set.all %}
+                                    <div class="comment-list left-padding" id="single_comment_box_{{ comment.id }}">
+                                        <div class="single-comment justify-content-between d-flex">
+                                            <div class="user justify-content-between d-flex">
+                                                <div class="thumb">
+                                                    {% if sub_comment.user.avatar %}
+                                                        {% thumbnail sub_comment.user.avatar '100x100' crop='center' as im %}
+                                                            <img src="{{ im.url }}" alt="">
+                                                        {% endthumbnail %}
+                                                    {% else %}
+                                                        <img style="width: 100px;height: 100px"
+                                                             src="{% static 'img/avatar.png' %}" alt="">
+                                                    {% endif %}
+                                                </div>
+                                                <div class="desc">
+                                                    <h5><a href="#">{{ sub_comment.user }}</a></h5>
+                                                    <p class="date">{{ sub_comment.create_date }}</p>
+                                                    <p class="comment">
+                                                        {{ sub_comment.text }}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            {% endfor %}
+                        {% else %}
+                            <div class="alert alert-danger">There is no comments yet...</div>
+                        {% endif %}
+
+                    </div>
+                    <div class="comment-form" id="blog_comments_area">
+                        {% if request.user.is_authenticated %}
+                            <h4>Leave a Comment</h4>
+                            <form action="{% url 'blog_detail' slug=selected_blog.slug %}" method="post">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    {{ form.text }}
+                                    {% if form.subject.errors %}
+                                        <div class="alert alert-danger">
+                                            {% for error in form.text.errors %}
+                                                {{ error }}
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="form-group">
+                                    {{ form.captcha }}
+                                    {{ form.captcha.errors }}
+                                </div>
+                                <input type="hidden" name="parent_id" id="parent_id" value="">
+                                <button type="submit" class="primary-btn submit_btn">Post Comment</button>
+                            </form>
+                        {% else %}
+                            <div class="alert alert-danger">You must logged in to post a comment.<a
+                                    href="{% url 'login_page' %}">Log In</a></div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% render_partial 'blog_module.views.blog_sidebar_component' slug=blog.slug %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

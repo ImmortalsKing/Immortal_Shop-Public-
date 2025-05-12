@@ -1,0 +1,20 @@
+{% extends 'shared/_layout.html' %}
+{% load static %}
+
+{% block title %}
+    Fail Purchase
+{% endblock %}
+{% block header_references %}
+    <link rel="stylesheet" href="{% static 'css/purchase.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="code-container">
+        <h1>Payment Failed</h1>
+        <p>The PayPal gateway is currently unavailable. Please try again later or try another payment method.</p>
+        <img style="width: 150px;height: 150px;" src="{% static '/img/fail.png' %}" alt="Error">
+        <br>
+        <br>
+        <a href="{% url 'order_checkout' %}" class="code-button">Return to Checkout</a>
+    </div>
+{% endblock %}

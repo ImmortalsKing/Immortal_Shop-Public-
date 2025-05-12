@@ -1,0 +1,131 @@
+{% extends 'shared/_layout.html' %}
+{% load thumbnail %}
+{% load render_partial %}
+
+{% block title %}
+    Products List Page
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-3 col-lg-4 col-md-5">
+                {% render_partial 'product_module.views.product_category_component' %}
+                {% render_partial 'product_module.views.product_brand_component' %}
+                <div class="sidebar-categories">
+                    {% if banner %}
+                        {% thumbnail banner.image '250x250' crop='center' as im %}
+                            <a href="{{ banner.url }}"><img src="{{ im.url }}" alt=""></a>
+                        {% endthumbnail %}
+                    {% endif %} 
+{#                    <div class="head">Price Filter</div>#}
+{#                    <div class="price-range-area">#}
+{#                        <div id="price-range"></div>#}
+{#                        <div class="value-wrapper d-flex">#}
+{#                            <div class="price">Price:</div>#}
+{#                            <span>$</span>#}
+{#                            <div id="lower-value"></div>#}
+{#                            <div class="to">to</div>#}
+{#                            <span>$</span>#}
+{#                            <div id="upper-value"></div>#}
+{#                        </div>#}
+{#                    </div>#}
+                </div>
+                {#                <div class="shipping text-center"><!--shipping-->#}
+                {#                    {% for banner in banners %}#}
+                {#                        <a href="{{ banner.url }}"> <img src="{{ banner.image.url }}" alt="">#}
+                {#                        </a>#}
+                {#                    {% endfor %}#}
+                {#                    <br>#}
+                {#                    <br>#}
+                {##}
+                {#                </div><!--/shipping-->#}
+            </div>
+            <div class="col-xl-9 col-lg-8 col-md-7">
+                {% if products %}
+                    <!-- Start Filter Bar -->
+                    <div class="filter-bar d-flex flex-wrap align-items-center">
+                        <h4 style="padding-top:15px;color:white">Products List:</h4>
+                    </div>
+                    {% if request.path == '/products/' %}
+                        {% if messages %}
+                            <div class="messages">
+                                {% for message in messages %}
+                                    <div class="alert alert-{{ message.tags }}">
+                                        {{ message }}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    {% endif %}
+
+                    <!-- End Filter Bar -->
+                    <!-- Start Products -->
+                    <section class="lattest-product-area pb-40 category-list">
+                        <div class="row">
+                            {% include 'includes/product_item_partial.html' with product=product %}
+                        </div>
+                    </section>
+                    <!-- End Products -->
+                    <!-- Start Filter Bar -->
+                    <div class="filter-bar d-flex flex-wrap align-items-center">
+                        <div class="sorting mr-auto">
+                            <form method="get" id="paginate-form">
+                                {% for key, value in request.GET.items %}
+                                    {% if key != 'paginate_by' %}
+                                        <input type="hidden" name="{{ key }}" value="{{ value }}">
+                                    {% endif %}
+                                {% endfor %}
+                                <select name="paginate_by" id="paginate-by"
+                                        onchange="document.getElementById('paginate-form').submit()"
+                                        style="display: none;">
+                                    <option value="1">{% if paginate_by == 1 %}selected{% endif %}Show 1 item</option>
+                                    <option value="3">{% if paginate_by == 3 %}selected{% endif %}Show 3 items</option>
+                                    <option value="6">{% if paginate_by == 6 %}selected{% endif %}Show 6 items</option>
+                                </select>
+                                <div class="nice-select" tabindex="0"
+                                     onclick="document.getElementById('paginate_by').click()">
+                                    <span class="current">Show {{ paginate_by }}</span>
+                                    <ul class="list">
+                                        <li data-value="1" class="option {% if paginate_by == 1 %}selected{% endif %}"
+                                            onclick="paginate_by({{ paginate_by }})">
+                                            Show 1 item
+                                        </li>
+                                        <li data-value="3" class="option {% if paginate_by == 3 %}selected{% endif %}"
+                                            onclick="paginate_by({{ paginate_by }});">
+                                            Show 3 items
+                                        </li>
+                                        <li data-value="6" class="option {% if paginate_by == 6 %}selected{% endif %}"
+                                            onclick="paginate_by({{ paginate_by }});">
+                                            Show 6 items
+                                        </li>
+                                    </ul>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="pagination">
+                            {% if page_obj.has_previous %}
+                                <a href="?page={{ page_obj.previous_page_number }}" class="prev-arrow"><i
+                                        class="fa fa-long-arrow-left" aria-hidden="true"></i></a>
+                            {% endif %}
+                            {% for pageNumber in paginator.page_range %}
+                                <a href="?page={{ pageNumber }}"
+                                   class="{% if page_obj.number == pageNumber %}active{% endif %}">{{ pageNumber }}</a>
+                            {% endfor %}
+                            {% if page_obj.has_next %}
+                                <a href="?page={{ page_obj.next_page_number }}" class="next-arrow"><i
+                                        class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <!-- End Filter Bar -->
+                    </div>
+                {% else %}
+                    <div class="alert alert-warning">
+                        <p>No Products Found</p>
+                    </div>
+                {% endif %}
+        </div>
+        {% render_partial 'home_module.views.site_related_products_component' %}
+    </div>
+{% endblock %}

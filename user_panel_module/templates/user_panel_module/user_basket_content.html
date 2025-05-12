@@ -1,0 +1,141 @@
+{% load thumbnail %}
+
+{% if order.orderdetails_set.all %}
+    <section class="cart_area">
+        <div class="container">
+            <div class="cart_inner">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Product</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Total</th>
+                            <th scope="col"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for detail in order.orderdetails_set.all %}
+                            <tr>
+                                <td>
+                                    <div class="media">
+                                        <div class="d-flex">
+                                            {% thumbnail detail.product.image '400x400' crop='center' as im %}
+                                                <img style="width: 150px" src="{{ im.url }}" alt="">
+                                            {% endthumbnail %}
+                                        </div>
+                                        <div class="media-body">
+                                            <p>{{ detail.product.title }}</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    {% if detail.product.discount_percentage and detail.product.discount_timer.is_active == True %}
+                                        <h5>${{ detail.product.get_price_after_discount }}</h5>
+                                    {% elif detail.product.discount_percentage and detail.product.discount_timer == Null %}
+                                        <h5>${{ detail.product.get_price_after_discount }}</h5>
+                                    {% else %}
+                                        <h5>${{ detail.product.price }}</h5>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <div class="product_count">
+                                        <input type="text" name="quantity" id="quantity" maxlength="12"
+                                               value="{{ detail.quantity }}" autocomplete="off" size="2"
+                                               title="Quantity:"
+                                               class="input-text qty">
+                                        <button onclick="changeOrderDetailCount({{ detail.id }},'increase')"
+                                                class="increase items-count"><i
+                                                class="lnr lnr-chevron-up"></i>
+                                        </button>
+                                        <button onclick="changeOrderDetailCount({{ detail.id }},'decrease')"
+                                                class="reduced items-count"><i
+                                                class="lnr lnr-chevron-down"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                                <td>
+                                    <h5>${{ detail.get_total_price }}</h5>
+                                </td>
+                                <td style="padding-left:40px;">
+                                    <a onclick="delOrderDetail({{ detail.id }})"
+                                       class="cart_quantity_delete cursor-pointer"><i
+                                            class="bi bi-trash"></i></a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        <tr>
+                            <td>
+
+                            </td>
+                            <td>
+
+                            </td>
+                            <td>
+                                <h5>Subtotal</h5>
+                            </td>
+                            <td>
+                                <h5 id="subtotal-amount">${{ subtotal }}</h5>
+                            </td>
+                        </tr>
+{#                        <tr class="shipping_area">#}
+{#                            <td>#}
+{##}
+{#                            </td>#}
+{#                            <td>#}
+{##}
+{#                            </td>#}
+{#                            <td>#}
+{#                                <h5>Shipping</h5>#}
+{#                            </td>#}
+{#                            <td id="shipping-methods-container">#}
+{#                                <form action="{% url 'set_shipping_method' %}" method="post" id="shipping-form">#}
+{#                                    {% csrf_token %}#}
+{#                                    <div class="shipping_box">#}
+{#                                        {% for method in shipping_methods %}#}
+{#                                            <label>#}
+{#                                                <input type="radio" name="shipping_method" value="{{ method.id }}"#}
+{#                                                       {% if order.shipping_method and order.shipping_method.id == method.id %}checked{% endif %}>#}
+{#                                                {{ method.name }}: ${{ method.price }}#}
+{#                                            </label><br>#}
+{#                                        {% endfor %}#}
+{#                                    </div>#}
+{#                                    <button type="submit" class="primary-btn">Set Shipping Method</button>#}
+{#                                </form>#}
+{#                            </td>#}
+{#                        </tr>#}
+                        <tr class="out_button_area">
+                            <td>
+
+                            </td>
+                            <td>
+
+                            </td>
+                            <td>
+
+                            </td>
+                            <td>
+                                <div class="checkout_btn_inner d-flex align-items-center">
+                                    <a class="gray_btn" href="{% url 'products_list' %}">Continue Shopping</a>
+                                    <a class="primary-btn" href="{% url 'order_checkout' %}">Proceed to checkout</a>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+{% else %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-warning">
+                    <p>Your Shopping cart is empty.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}

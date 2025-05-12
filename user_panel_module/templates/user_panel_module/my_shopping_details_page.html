@@ -1,0 +1,43 @@
+{% extends 'shared/_layout.html' %}
+{% load render_partial %}
+{% load static %}
+
+{% block title %}
+	My Shopping Details Page
+{% endblock %}
+{% block header_references %}
+    <link rel="stylesheet" href="{% static 'css/user_panel.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="dashboard-container">
+    {% render_partial 'user_panel_module.views.user_panel_sidebar_component' %}
+    <div class="dash-content">
+        <div class="account-info">
+            <table style="padding-left: 22rem" class="table table-responsive table-hover table-striped">
+                <thead class="table-dark">
+                    <th class="text-center">Order ID</th>
+                    <th class="text-center">Product</th>
+                    <th class="text-center">Counts</th>
+                    <th class="text-center">Final Price</th>
+                </thead>
+                {% for detail in order.orderdetails_set.all %}
+                	<tr>
+                    <td class="text-center">{{ detail.order_id }}</td>
+                    <td class="text-center">{{ detail.product.title }}</td>
+                    <td class="text-center">{{ detail.quantity }}</td>
+                    <td class="text-center">$ {{ detail.final_price }}</td>
+                    </tr>
+                {% endfor %}
+
+            </table>
+        </div>
+    </div>
+</div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+{% endblock %}

@@ -1,0 +1,16 @@
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+                <h1>{{ url }}</h1>
+                <nav class="d-flex align-items-center">
+                    <a href="{% url 'home_page' %}">HOME</a>
+                    <a href="{{ address_1 }}"><span class="lnr lnr-arrow-right"></span>{{ url }}</a>
+                    {% if url_in != "" %}
+                    	<a href="{{ address_2 }}"><span class="lnr lnr-arrow-right"></span>{{ url_in }}</a>
+                    {% endif %}
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>

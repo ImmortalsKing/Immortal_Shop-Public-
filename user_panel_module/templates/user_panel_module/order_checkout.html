@@ -1,0 +1,146 @@
+{% extends 'shared/_layout.html' %}
+
+{% block title %}
+    Order Checkout
+{% endblock %}
+
+{% block content %}
+    <div>
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+    <section class="checkout_area section_gap">
+        <div class="container">
+            <div class="billing_details">
+                <div class="row">
+                    <div class="col-lg-7">
+                        <h3>Billing Details</h3>
+                        <form class="row contact_form" action="{% url 'order_checkout' %}" method="post">
+                            {% csrf_token %}
+                            <div class="col-md-6 form-group p_star">
+                                {{ form.first_name }}
+                                {% if form.first_name.errors %}
+                                    <div class="alert alert-danger">
+                                        {% for error in form.first_name.errors %}
+                                            {{ error }}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-6 form-group p_star">
+                                {{ form.last_name }}
+                                {% if form.last_name.errors %}
+                                    <div class="alert alert-danger">
+                                        {% for error in form.last_name.errors %}
+                                            {{ error }}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-6 form-group p_star">
+                                {{ form.phone }}
+                                {% if form.phone.errors %}
+                                    <div class="alert alert-danger">
+                                        {% for error in form.phone.errors %}
+                                            {{ error }}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-6 form-group p_star">
+                                {{ form.email }}
+                            </div>
+                            <div class="col-md-12 form-group p_star">
+                                {{ form.address }}
+                                {% if form.address.errors %}
+                                    <div class="alert alert-danger">
+                                        {% for error in form.address.errors %}
+                                            {{ error }}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-12 form-group shipping_box">
+                                {% for method in shipping_methods %}
+                                    <label>
+                                        <input type="radio" name="shipping_method" value="{{ method.id }}"
+                                               {% if order.shipping_method and order.shipping_method.id == method.id %}checked{% endif %}
+                                               required>
+                                        {{ method.name }}: ${{ method.price }}
+                                    </label><br>
+                                {% endfor %}
+                                <br>
+                                <div style="margin-left: -10px;" class="col-md-12 form-group">
+                                    {{ form.captcha }}
+                                    <div style="color: red;">
+                                        {{ form.captcha.errors }}
+                                    </div>
+                                </div>
+                                <button name="submit_1" value="submit_1" type="submit" class="primary-btn">Set Shipping
+                                    Method
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-lg-5">
+                        <div class="order_box">
+                            <h2>Your Order</h2>
+                            <ul class="list">
+                                <li><a href="#">Product <span>Total</span></a></li>
+                                {% for detail in order.orderdetails_set.all %}
+                                    <li>
+                                        <a href="{% url 'products_detail' slug=detail.product.slug %}">{{ detail.product.title }}
+                                            <span class="middle">x {{ detail.quantity }}</span> <span
+                                                    class="last">${{ detail.get_total_price }}</span></a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                            <ul class="list list_2">
+                                <li><a href="#">Subtotal <span>${{ order.sub_total_amount }}</span></a></li>
+                                <li><a href="#">Shipping <span>{{ order.shipping_method }}</span></a></li>
+                                <li><a href="#">Total <span>${{ total }}</span></a></li>
+                            </ul>
+                            <form id="payment-form" action="{% url 'order_checkout' %}" method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="order_id" id="order-id" value="{{ order.id }}">
+                                <div class="payment_item">
+                                    <div class="radion_btn">
+                                        <input type="radio" id="f-option5" name="selector" value="door_to_door">
+                                        <label for="f-option5">Door To Door Payment</label>
+                                        <div class="check"></div>
+                                    </div>
+                                    <p>Door-to-door payment is a service where customers can make payments directly at
+                                        their doorstep upon receiving goods.</p>
+                                </div>
+                                <div class="payment_item">
+                                    <div class="radion_btn">
+                                        <input type="radio" id="f-option6" name="selector" value="paypal">
+                                        <label for="f-option6">PAYPAL</label>
+                                        <div class="check"></div>
+                                    </div>
+                                    <p>Pay via PayPal; you can pay with your credit card if you don’t have a PayPal
+                                        account.</p>
+                                </div>
+                                <div class="creat_account">
+                                    <input type="checkbox" id="f-option4" name="term&condition" value="" required>
+                                    <label for="f-option4">I’ve read and accept the </label>
+                                    <a href="{% url 'terms_and_conditions_page' %}">terms &amp; conditions*</a>
+                                </div>
+                                <button name="submit_2" value="submit_2" class="primary-btn" type="submit">Proceed to
+                                    Payment
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
